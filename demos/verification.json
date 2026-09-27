@@ -35,8 +35,8 @@
   ],
   "media": {
     "media/visual.gif": {
-      "sha256": "1df59a831e545fb5b804bd633f90ae71e01c6c3d61bedce5f272ae880d44b1db",
-      "bytes": 106045
+      "sha256": "7b36a3419a7fa28bc16d1712f441ccf28b7dc4578da8434b81833ff2db41ad98",
+      "bytes": 106176
     },
     "media/resolve.mp4": {
       "sha256": "3cbe02ecb50085ea244272a9dc09e67f35d3ba4f82a669489f709bf06eb8591c",
@@ -51,8 +51,8 @@
       "bytes": 1363109
     },
     "media/visual.mp4": {
-      "sha256": "04a30f84520ca26ccbdd5a331a1b52ae93556e09ebad8a5234119e523a70e760",
-      "bytes": 134718
+      "sha256": "56d20c38a010807e956cb025ac0fcb6280326071d7480bea2990583dbe7c61e9",
+      "bytes": 134806
     },
     "media/balance.mp4": {
       "sha256": "47234d5cabe1260b56099130f72f7571bd4456ae74f6308eced4024417f94781",

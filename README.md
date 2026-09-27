@@ -13,12 +13,12 @@ This work started from the FEUniverse project at revision `ecc6798b` and incorpo
 Browse the [demo overview](demos/README.md) and the source for each showcase:
 
 - [Balance](demos/balance/README.md)
-- [Resolve](demos/resolve/README.md)
-- [Visual](demos/visual/README.md)
+- [Resolve prf ability](demos/resolve/README.md)
+- [Eirika portrait recolor](demos/visual/README.md)
 
 [Download the playable patches and videos](https://github.com/alachhman/fireemblem8u/releases/tag/showcase-v1). Each demo includes source changes and real emulator footage.
 
-![Twilight Eirika: original and recolor](demos/media/visual.gif)
+![Eirika portrait: original and recolored](demos/media/visual.gif)
 
 ## Build
 

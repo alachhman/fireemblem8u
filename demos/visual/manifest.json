@@ -1,5 +1,5 @@
 {
-  "name": "Twilight Eirika",
+  "name": "Eirika portrait recolor",
   "baseline_commit": "d28f4241ad4a64f93707a7db7d4c325847d8a123",
   "format": "GBA RGB555 palette, 16 little-endian 16-bit entries",
   "target": "graphics/portrait/portrait_Eirika_palette.agbpal",

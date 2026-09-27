@@ -1,6 +1,6 @@
 # Sacred Stones mod showcase
 
-Three independent, source-built examples: weapon balance, a combat rule, and a portrait palette. Each starts from the same verified USA baseline. **Apply one patch to a clean baseline; do not stack these patches.**
+Three independent, source-built examples: weapon balance, a prf ability, and a portrait palette. Each starts from the same verified USA baseline. **Apply one patch to a clean baseline; do not stack these patches.**
 
 [Download all three patches and videos](https://github.com/alachhman/fireemblem8u/releases/tag/showcase-v1).
 
@@ -12,19 +12,19 @@ Rapier might rises from 7 to 9 and hit from 95 to 105; Iron Sword might and Eiri
 
 [Source and exact values](balance/README.md) · [BPS patch](releases/balance.bps) · [Video](media/balance.mp4)
 
-## Resolve: a new combat rule
+## Resolve: Eirika’s prf ability
 
-Eirika gains **+4 attack at half HP or below**. The included training setup starts her at 8/16 HP and places an 11-HP fighter nearby. Move two tiles right, then attack downward. The recorded forecast shows 9 damage per strike on mountain terrain; the captured fight ends with the fighter defeated and Eirika alive. Outcomes can vary with your inputs and random-number state.
+Resolve is Eirika’s **prf ability**, granting **+4 attack at half HP or below**. The included training setup starts her at 8/16 HP and places an 11-HP fighter nearby. Move two tiles right, then attack downward. The recorded forecast shows 9 damage per strike on mountain terrain; the captured fight ends with the fighter defeated and Eirika alive. Outcomes can vary with your inputs and random-number state.
 
 ![Resolve training encounter](media/resolve.gif)
 
 [Source and boundary checks](resolve/README.md) · [BPS patch](releases/resolve.bps) · [Video](media/resolve.mp4)
 
-## Twilight Eirika
+## Eirika portrait recolor
 
 Purple hair and crimson clothing in Eirika's normal dialogue portrait, with skin and pale highlights preserved. This changes the portrait palette, not her battle sprite.
 
-![Original and Twilight Eirika](media/visual.gif)
+![Original and Eirika portrait recolor](media/visual.gif)
 
 [Palette source and installer](visual/README.md) · [BPS patch](releases/visual.bps) · [Video](media/visual.mp4)
 

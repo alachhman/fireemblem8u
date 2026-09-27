@@ -1,4 +1,4 @@
-# Twilight Eirika
+# Eirika portrait recolor
 
 This demo recolors Eirika's normal dialogue portrait through its indexed 16-color GBA palette. It shifts the blue/cyan ramp at palette indices 7–10 toward aubergine and purple, and the warm costume ramp at 11–13 toward crimson. Palette indices 0–6 (including transparency and skin), plus the pale highlights at 14–15, stay unchanged.
 

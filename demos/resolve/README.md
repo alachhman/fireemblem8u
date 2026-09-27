@@ -1,14 +1,14 @@
-# Resolve combat sample
+# Resolve: Eirika’s prf ability
 
-Eirika gains **+4 attack** when `2 * curHP <= maxHP`. The inclusive comparison handles odd maximum HP without rounding. The bonus is added after weapon effectiveness and before the existing Monster Stone override. It affects forecast and combat calculations, including Eirika's counterattacks; other characters receive no bonus.
+Resolve is Eirika’s **prf ability**: she gains **+4 attack** when `2 * curHP <= maxHP`. The inclusive comparison handles odd maximum HP without rounding. The bonus is added after weapon effectiveness and before the existing Monster Stone override. It affects forecast and combat calculations, including Eirika's counterattacks; other characters receive no bonus.
 
 The published patch combines three readable changes:
 
-- [source.patch](source.patch): the four-line combat rule in `ComputeBattleUnitAttack`.
+- [source.patch](source.patch): the four-line prf ability check in `ComputeBattleUnitAttack`.
 - [encounter.patch](encounter.patch): a Prologue training fixture, setting Eirika to 8/16 HP and a nearby fighter to 11 HP, and moving that fighter to (6,6).
 - [layout.patch](layout.patch): supports the changed source layout in the demo build. It removes the matching-only absolute sound-entry address pin while preserving relative position, size and alignment checks. It derives the duplicate-object copy addresses from fresh symbols, with bounded relocation checks. The tested build shifts the relevant data by 56 bytes and earlier read-only data by 32 bytes.
 
-These changes are applied only by the [demo build runner](../build.py) in the selected checkout. The repository's default baseline keeps its original matching rules. The combat rule can be studied separately from the training fixture, but a source build with changed code still needs the layout support.
+These changes are applied only by the [demo build runner](../build.py) in the selected checkout. The repository's default baseline keeps its original matching rules. The prf ability can be studied separately from the training fixture, but a source build with changed code still needs the layout support.
 
 ## Play the encounter
 

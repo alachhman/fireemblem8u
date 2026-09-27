@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install or restore the source-only Twilight Eirika portrait palette demo."""
+"""Install or restore the source-only Eirika recolor portrait palette demo."""
 
 from __future__ import annotations
 
@@ -79,10 +79,10 @@ def run(command: str, repo: Path) -> int:
                 return 2
             target.write_bytes(expected)
             print_values(current, expected)
-            print(f"Installed Twilight Eirika palette at {target}")
+            print(f"Installed Eirika recolor palette at {target}")
             return 0
         if bundled_variant.is_file() and current == bundled_variant.read_bytes():
-            print(f"Twilight Eirika palette is already installed at {target}")
+            print(f"Eirika recolor palette is already installed at {target}")
             return 0
         print("Source palette has changed; refusing to overwrite it", file=sys.stderr)
         return 2
@@ -112,7 +112,7 @@ def run(command: str, repo: Path) -> int:
         print(f"Baseline palette present at {target}")
         return 0
     if bundled_variant.is_file() and current == bundled_variant.read_bytes():
-        print(f"Twilight Eirika palette installed at {target}")
+        print(f"Eirika recolor palette installed at {target}")
         return 0
     print("Source palette matches neither the baseline nor this demo", file=sys.stderr)
     return 2
