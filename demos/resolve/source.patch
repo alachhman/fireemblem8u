@@ -1,0 +1,14 @@
+diff --git a/src/bmbattle.c b/src/bmbattle.c
+--- a/src/bmbattle.c
++++ b/src/bmbattle.c
+@@ -554,6 +554,10 @@ void ComputeBattleUnitAttack(struct BattleUnit* attacker, struct BattleUnit* defender) {
+ 
+     attacker->battleAttack = attack;
+     attacker->battleAttack += attacker->unit.pow;
++
++    if ((UNIT_CHAR_ID(&attacker->unit) == CHARACTER_EIRIKA)
++        && (attacker->unit.curHP * 2 <= attacker->unit.maxHP))
++        attacker->battleAttack += 4;
+ 
+     if (GetItemIndex(attacker->weapon) == ITEM_MONSTER_STONE)
+         attacker->battleAttack = 0;

@@ -1,0 +1,27 @@
+diff --git a/src/events/prologue-eventscript.h b/src/events/prologue-eventscript.h
+--- a/src/events/prologue-eventscript.h
++++ b/src/events/prologue-eventscript.h
+@@ -224,6 +224,11 @@
+ CONST_DATA EventListScr EventScr_Prologue_ONeillSpawn[] = {
+     LOAD1(1, UnitDef_Event_PrologueEnemy)
+     ENUN
++    /* Resolve demo: an injured hero and a nearby training target. */
++    SVAL(EVT_SLOT_1, 8)
++    SET_HP(CHARACTER_EIRIKA)
++    SVAL(EVT_SLOT_1, 11)
++    SET_HP(0x82)
+     FlashCursor(CHARACTER_ONEILL, 60)
+     MUSC(SONG_SHADOW_OF_THE_ENEMY)
+     Text(0x910)
+diff --git a/src/events/prologue-eventudefs.h b/src/events/prologue-eventudefs.h
+--- a/src/events/prologue-eventudefs.h
++++ b/src/events/prologue-eventudefs.h
+@@ -68,7 +68,7 @@
+ CONST_DATA struct REDA REDAs_PrologueEnemy2[] = {
+     /* Enemy2 */
+     {
+-        .x = 8,
++        .x = 6,
+         .y = 6,
+         .b = 0xffff,
+     },

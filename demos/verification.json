@@ -1,0 +1,102 @@
+{
+  "baseline_sha1": "c25b145e37456171ada4b0d440bf88a19f4d509f",
+  "variants": {
+    "balance": {
+      "flips_application_matches_compiled_rom": true,
+      "portable_application_matches_compiled_rom": true,
+      "wrong_source_rejected": true,
+      "build_receipt": "releases/balance.json"
+    },
+    "resolve": {
+      "flips_application_matches_compiled_rom": true,
+      "portable_application_matches_compiled_rom": true,
+      "wrong_source_rejected": true,
+      "build_receipt": "releases/resolve.json"
+    },
+    "visual": {
+      "flips_application_matches_compiled_rom": true,
+      "portable_application_matches_compiled_rom": true,
+      "wrong_source_rejected": true,
+      "build_receipt": "releases/visual.json"
+    }
+  },
+  "resolve_host_c_cases": 13,
+  "capture_engine": "mGBA 0.10.5 (26b7884bc25a5933960f3cdcd98bac1ae14d42e2)",
+  "capture_ram_writes": false,
+  "observed": {
+    "balance": "Inventory attack 13 and hit 123, baseline 11 and 113",
+    "visual": "Purple hair/crimson clothing in normal Eirika dialogue portrait",
+    "resolve": "Eirika 8/16 HP; forecast 9 damage x2; fighter defeated; Eirika remains 8 HP"
+  },
+  "limits": [
+    "Only the opening demo scenes and one Resolve fight were emulator-tested.",
+    "Growth changes were not statistically playtested.",
+    "No full-campaign regression or hardware test."
+  ],
+  "media": {
+    "media/visual.gif": {
+      "sha256": "1df59a831e545fb5b804bd633f90ae71e01c6c3d61bedce5f272ae880d44b1db",
+      "bytes": 106045
+    },
+    "media/resolve.mp4": {
+      "sha256": "3cbe02ecb50085ea244272a9dc09e67f35d3ba4f82a669489f709bf06eb8591c",
+      "bytes": 826728
+    },
+    "media/balance.gif": {
+      "sha256": "049022082f741245d0e488571bffa59a5fccf2be237878a2c0bf649291dc8e9e",
+      "bytes": 403075
+    },
+    "media/resolve.gif": {
+      "sha256": "4302637df4bdba6f952517c4060c4e9a73883b067f47c55d1e012db4f9fe8c0a",
+      "bytes": 1363109
+    },
+    "media/visual.mp4": {
+      "sha256": "04a30f84520ca26ccbdd5a331a1b52ae93556e09ebad8a5234119e523a70e760",
+      "bytes": 134718
+    },
+    "media/balance.mp4": {
+      "sha256": "47234d5cabe1260b56099130f72f7571bd4456ae74f6308eced4024417f94781",
+      "bytes": 158540
+    }
+  },
+  "balance_exact_rom_byte_changes": [
+    {
+      "offset": "0x803d80",
+      "before": 70,
+      "after": 80
+    },
+    {
+      "offset": "0x803d81",
+      "before": 40,
+      "after": 50
+    },
+    {
+      "offset": "0x809b49",
+      "before": 5,
+      "after": 6
+    },
+    {
+      "offset": "0x809c69",
+      "before": 7,
+      "after": 9
+    },
+    {
+      "offset": "0x809c6a",
+      "before": 95,
+      "after": 105
+    }
+  ],
+  "floating_ips_revision": "ff216a75df0987047a67d7923567dc4482ce07ac",
+  "resolve_replayed_from_reset": true,
+  "advisory_review": {
+    "model": "jev-1.13.0",
+    "request_sha256": "69203b2e665333eea6665a031c2da0e101e1e3c37cf79706c4876b78cc2230d2",
+    "bounded_requirements": [
+      "balance",
+      "resolve",
+      "visual",
+      "claims"
+    ],
+    "result": "supported; advisory only; host inspected actual artifacts and ran verification"
+  }
+}

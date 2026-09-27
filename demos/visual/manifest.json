@@ -1,0 +1,106 @@
+{
+  "name": "Twilight Eirika",
+  "baseline_commit": "d28f4241ad4a64f93707a7db7d4c325847d8a123",
+  "format": "GBA RGB555 palette, 16 little-endian 16-bit entries",
+  "target": "graphics/portrait/portrait_Eirika_palette.agbpal",
+  "asset": "assets/portrait_Eirika_palette_twilight.agbpal",
+  "source": {
+    "before": {
+      "sha256": "57f5452cd80eab121de8a46287d522281c978c6ef0159b08740ff9837f7a3fe4",
+      "rgb555_words": [
+        "0x4F34",
+        "0x6FDF",
+        "0x473F",
+        "0x2E7D",
+        "0x25D3",
+        "0x252C",
+        "0x2087",
+        "0x7763",
+        "0x62A2",
+        "0x4145",
+        "0x6162",
+        "0x33FE",
+        "0x235B",
+        "0x10BA",
+        "0x7353",
+        "0x7FFE"
+      ]
+    },
+    "after": {
+      "sha256": "067040d01ed7a528800ee5f7fdce6e4576f8c50758a540334beee4c67e9d4042",
+      "rgb555_words": [
+        "0x4F34",
+        "0x6FDF",
+        "0x473F",
+        "0x2E7D",
+        "0x25D3",
+        "0x252C",
+        "0x2087",
+        "0x561A",
+        "0x3D53",
+        "0x2488",
+        "0x356D",
+        "0x3A1F",
+        "0x311A",
+        "0x24B1",
+        "0x7353",
+        "0x7FFE"
+      ]
+    }
+  },
+  "edits": [
+    {
+      "index": 7,
+      "before": "0x7763",
+      "after": "0x561A",
+      "role": "aubergine hair ramp"
+    },
+    {
+      "index": 8,
+      "before": "0x62A2",
+      "after": "0x3D53",
+      "role": "aubergine hair ramp"
+    },
+    {
+      "index": 9,
+      "before": "0x4145",
+      "after": "0x2488",
+      "role": "aubergine hair ramp"
+    },
+    {
+      "index": 10,
+      "before": "0x6162",
+      "after": "0x356D",
+      "role": "aubergine hair ramp"
+    },
+    {
+      "index": 11,
+      "before": "0x33FE",
+      "after": "0x3A1F",
+      "role": "warm crimson costume ramp"
+    },
+    {
+      "index": 12,
+      "before": "0x235B",
+      "after": "0x311A",
+      "role": "warm crimson costume ramp"
+    },
+    {
+      "index": 13,
+      "before": "0x10BA",
+      "after": "0x24B1",
+      "role": "warm crimson costume ramp"
+    }
+  ],
+  "preserved_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    14,
+    15
+  ]
+}

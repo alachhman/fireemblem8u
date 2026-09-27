@@ -1,0 +1,37 @@
+--- a/src/data_items.c
++++ b/src/data_items.c
+@@ -15,8 +15,8 @@ CONST_DATA struct ItemData gItemData[] = {
+ 		.weaponType = ITYPE_SWORD,
+ 		.attributes = IA_WEAPON,
+ 		.maxUses = 46,
+-		.might = 5,
++		.might = 6,
+ 		.hit = 90,
+ 		.weight = 5,
+ 		.encodedRange = 0x11,
+ 		.costPerUse = 10,
+@@ -145,8 +145,8 @@ CONST_DATA struct ItemData gItemData[] = {
+ 		.attributes = IA_WEAPON | IA_UNSELLABLE | IA_LOCK_4,
+ 		.pEffectiveness = ItemEffectiveness_ArmorAndHorse,
+ 		.maxUses = 40,
+-		.might = 7,
+-		.hit = 95,
++		.might = 9,
++		.hit = 105,
+ 		.weight = 5,
+ 		.crit = 10,
+ 		.encodedRange = 0x11,
+--- a/src/data_characters.c
++++ b/src/data_characters.c
+@@ -29,9 +29,9 @@ CONST_DATA struct CharacterData gCharacterData[] = {
+         .baseRanks = {
+             [ITYPE_SWORD] = WPN_EXP_E,
+         },
+ 
+-        .growthHP  = 70,
+-        .growthPow = 40,
++        .growthHP  = 80,
++        .growthPow = 50,
+         .growthSkl = 60,
+         .growthSpd = 60,
+         .growthDef = 30,

@@ -1,0 +1,14 @@
+PASS eirika-full-normal: original=9 patched=9 delta=0
+PASS eirika-one-above-half: original=9 patched=9 delta=0
+PASS eirika-exact-half: original=9 patched=13 delta=4
+PASS eirika-below-half: original=9 patched=13 delta=4
+PASS eirika-zero-hp: original=9 patched=13 delta=4
+PASS seth-exact-half: original=9 patched=9 delta=0
+PASS eirika-odd-max-at-floor-half: original=9 patched=13 delta=4
+PASS eirika-odd-max-above-half: original=9 patched=9 delta=0
+PASS eirika-half-unit-effective: original=21 patched=25 delta=4
+PASS eirika-half-item-effective: original=21 patched=25 delta=4
+PASS eirika-half-sieg-linde-effective: original=21 patched=25 delta=4
+PASS eirika-full-sieg-linde-effective: original=21 patched=21 delta=0
+PASS eirika-half-monster-stone: original=0 patched=0 delta=0
+PASS all 13 host-C cases

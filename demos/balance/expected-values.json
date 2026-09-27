@@ -1,0 +1,52 @@
+{
+  "baseline_commit": "d28f4241ad4a64f93707a7db7d4c325847d8a123",
+  "changes": [
+    {
+      "subject": "ITEM_SWORD_IRON",
+      "file": "src/data_items.c",
+      "line": 18,
+      "field": "might",
+      "before": 5,
+      "after": 6
+    },
+    {
+      "subject": "ITEM_SWORD_RAPIER",
+      "file": "src/data_items.c",
+      "line": 148,
+      "field": "might",
+      "before": 7,
+      "after": 9,
+      "prologue_observable": true
+    },
+    {
+      "subject": "ITEM_SWORD_RAPIER",
+      "file": "src/data_items.c",
+      "line": 149,
+      "field": "hit",
+      "before": 95,
+      "after": 105,
+      "prologue_observable": true
+    },
+    {
+      "subject": "CHARACTER_EIRIKA",
+      "file": "src/data_characters.c",
+      "line": 33,
+      "field": "growthHP",
+      "before": 70,
+      "after": 80
+    },
+    {
+      "subject": "CHARACTER_EIRIKA",
+      "file": "src/data_characters.c",
+      "line": 34,
+      "field": "growthPow",
+      "before": 40,
+      "after": 50
+    }
+  ],
+  "prologue_reference": {
+    "file": "src/events/prologue-eventscript.h",
+    "line": 216,
+    "detail": "EventScr_Prologue_GiveRapier gives ITEM_SWORD_RAPIER to CHARACTER_EIRIKA."
+  }
+}

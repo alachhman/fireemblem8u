@@ -1,0 +1,62 @@
+diff --git a/ldscript.txt b/ldscript.txt
+--- a/ldscript.txt
++++ b/ldscript.txt
+@@ -672,7 +672,6 @@
+                "SoundMain shared C literal extent changed");
+         SoundMainRAM_BufferThumb = SoundMainRAM_Buffer + 1;
+         ASSERT((SoundMainBufferEntry & ~1) == SoundMainBufferEntryBoundary &&
+-               ABSOLUTE(__buffer_entry_start) == 0x080CF510 &&
+                __buffer_entry_end - __buffer_entry_start == 36,
+                "buffer entry position or 36-byte extent changed");
+         ASSERT(lt_o_SoundInfo_pcmBuffer == __buffer_entry_start + 52 &&
+diff --git a/scripts/rebuild_orphan_from_objects.py b/scripts/rebuild_orphan_from_objects.py
+--- a/scripts/rebuild_orphan_from_objects.py
++++ b/scripts/rebuild_orphan_from_objects.py
+@@ -13,18 +13,33 @@
+ (OUT/'link.ld').write_text(ldscript.replace(old,str(placeholder)))
+ (OUT/'objects.lst').write_text(objects.replace(old,str(placeholder)))
+ run(['arm-none-eabi-ld','-T',str(OUT/'link.ld'),'@'+str(OUT/'objects.lst'),'-R','banim/data_banim.o.sym.o','-L','.deps/runtime-c','-L','tools/agbcc/lib','-o',str(OUT/'stage.elf'),'-lc','-lgcc'])
++# Demo-only relocation support: the Resolve function grows the earlier text.
++# Keep the duplicate's internal layout checked while deriving its ROM position
++# from the fresh provisional link rather than the original matching addresses.
++symbols = {}
++for line in subprocess.check_output(['arm-none-eabi-nm', '--defined-only', str(OUT/'stage.elf')], text=True).splitlines():
++    fields = line.split()
++    if len(fields) == 3:
++        symbols[fields[2]] = int(fields[0], 16)
++layout_delta = symbols['gUnkData_108'] - 0x08b1fe7c
++assert 0 <= layout_delta <= 0x10000 and layout_delta % 4 == 0
++for name, original in [('impure_data', 0x08b1f734), ('__malloc_trim_threshold', 0x08b1fe40), ('__malloc_current_mallinfo', 0x08b1fe54)]:
++    assert symbols[name] == original + layout_delta, ('unsupported nonuniform demo layout', name)
++rodata_delta = symbols['gProcScr_TalkWaitForInput'] - 0x085913f0
++assert 0 <= rodata_delta <= layout_delta and rodata_delta % 4 == 0
++def at(offset): return offset + layout_delta
+ run(['arm-none-eabi-objcopy','-O','binary','-j','ROM',str(OUT/'stage.elf'),str(OUT/'stage.bin')])
+-stage=(OUT/'stage.bin').read_bytes();assert stage[0xb1fe7c:0xb2a604]==bytes(0xa788)
+-data=bytearray(stage[0xb15740:0xb1fe7c]);shifted=0
++stage=(OUT/'stage.bin').read_bytes();assert stage[at(0xb1fe7c):at(0xb2a604)]==bytes(0xa788)
++data=bytearray(stage[at(0xb15740):at(0xb1fe7c)]);shifted=0
+ for offset in range(0x9ff4,len(data),4):
+  value=struct.unpack_from('<I',data,offset)[0]
+- if 0x08b1f734<=value<0x08b1fe7c:
++ if at(0x08b1f734)<=value<at(0x08b1fe7c):
+   struct.pack_into('<I',data,offset,value+0xa73c);shifted+=1
+ assert shifted==260
+-assert struct.unpack_from('<I',data,0xa028)[0]==0x08587790
+-# Historical rodata address remains an explicit fidelity constant, not a live pointer.
+-struct.pack_into('<I',data,0xa028,0x085913f0)
+-tail=bytearray(stage[0xb1fe30:0xb1fe7c])
++assert struct.unpack_from('<I',data,0xa028)[0]==0x08587790 + rodata_delta
++# The demo translates the explicit historical constant with the known table owner.
++struct.pack_into('<I',data,0xa028,symbols['gProcScr_TalkWaitForInput'])
++tail=bytearray(stage[at(0xb1fe30):at(0xb1fe7c)])
+ for offset in range(0,16,4):struct.pack_into('<I',tail,offset,struct.unpack_from('<I',tail,offset)[0]+0xa788)
+ data+=tail;assert len(data)==0xa788
+ # Reference ROM is used only after generating the entire candidate.
+@@ -32,5 +47,5 @@
+ (OUT/'orphan.bin').write_bytes(data)
+ header=OUT/'orphan.inc';temporary=header.with_suffix('.tmp')
+ temporary.write_text('\n'.join(', '.join('0x%02x'%x for x in data[i:i+16])+',' for i in range(0,len(data),16))+'\n');temporary.replace(header)
+-report=dict(bytes=len(data),sha256=hashlib.sha256(data).hexdigest(),opaque_object_excluded=True,placeholder_bytes_verified_zero=True,uniform_pointer_changes=shifted,tail_pointer_changes=4,historical_rodata_constant='0x085913f0',reference_compared=args.verify,scope='Generated duplicate derived from a fresh provisional link of current recovered objects with the opaque object replaced by zero storage. Reference ROM used only with --verify. Does not establish historical origin or reachability.',output=str(OUT/'orphan.bin'))
++report=dict(bytes=len(data),sha256=hashlib.sha256(data).hexdigest(),opaque_object_excluded=True,placeholder_bytes_verified_zero=True,uniform_pointer_changes=shifted,tail_pointer_changes=4,historical_rodata_constant=hex(symbols['gProcScr_TalkWaitForInput']),layout_delta=layout_delta,reference_compared=args.verify,scope='Generated duplicate derived from a fresh provisional link of current recovered objects with the opaque object replaced by zero storage. Reference ROM used only with --verify. Does not establish historical origin or reachability.',output=str(OUT/'orphan.bin'))
+ (ROOT/'docs/orphan-object-rebuild.json').write_text(json.dumps(report,indent=2)+'\n');print(len(data),'bytes rebuild exactly without opaque source object')

@@ -1,0 +1,12 @@
+{
+  "variant": "visual",
+  "source_sha1": "c25b145e37456171ada4b0d440bf88a19f4d509f",
+  "target_sha1": "3231f0504307c51ca272d997d1ea414f70316494",
+  "target_sha256": "63ab6c92129f416c99e99465dd3c9f021a142707d04a7813a03c519dc46dbec2",
+  "target_bytes": 16777216,
+  "patch_sha256": "14d101954223a634a39aa8e16064433be56178824c4160ffde27b63e5b071eb8",
+  "patch_bytes": 158,
+  "bps_round_trip": true,
+  "source_patches": {},
+  "baseline_restored_and_compared": true
+}

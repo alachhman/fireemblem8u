@@ -1,0 +1,9 @@
+# From the first player phase: move Eirika two tiles east.
+step 5 1
+step 60 0
+step 5 10
+step 24 0
+step 5 10
+step 24 0
+step 5 1
+step 100 0

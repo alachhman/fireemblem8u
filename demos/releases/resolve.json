@@ -1,0 +1,17 @@
+{
+  "variant": "resolve",
+  "source_sha1": "c25b145e37456171ada4b0d440bf88a19f4d509f",
+  "target_sha1": "0c0a066d7c105524f5280ba3f385425684eccbd2",
+  "target_sha256": "7fffc45e803c4e23c3dbe7ce93730b9f46dcea41b340a46a2df97c769f2069df",
+  "target_bytes": 16777216,
+  "patch_sha256": "0498b9c7bc6cb3074011c056c9234ca19fb16ed212d7d783972800eee454f286",
+  "patch_bytes": 207765,
+  "bps_round_trip": true,
+  "patch_encoder": "Floating IPS BPS delta",
+  "source_patches": {
+    "resolve/source.patch": "ef6b66e5a48b624e315c2d4469b20aff61960e8a76e3244e07b97ec71f0643e4",
+    "resolve/layout.patch": "a270bbda999eed9360c079108cbf3453fecd0d7bcf71dbcf9a3a28922599b3e2",
+    "resolve/encounter.patch": "45e95797605991e32ebbd81c1628028277a0154b683bc43744ee20c3cc269558"
+  },
+  "baseline_restored_and_compared": true
+}

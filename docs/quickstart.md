@@ -1,48 +1,51 @@
-# Fire Emblem 8U Quick Start
+# Quick Start
 
-Get a working build of this decompilation with a single command using the bundled `scripts/quickstart.sh` helper. (If you prefer manual setup or run on another distro/package manager, see the README section below.)
+This guide covers building the source tree and checking the resulting ROM image. The build does not need a copy of the original game: tracked assets and the expected checksum are included in the repository.
 
-## Prerequisites
+## Restore the embedded payload on a fresh clone
 
-- _(Optional)_ A legally obtained copy of **Fire Emblem: The Sacred Stones (USA)**. The build does **not** need it — the result is verified against `checksum.sha1` — so it is only used by `asmdiff.sh` for disassembly comparison. If you have one, place it at the repo root as `baserom.gba`, or pass `--rom /path/to/rom.gba` (or `FIREEMBLEM8U_ROM=/path/to/rom.gba`).
-- Ubuntu/WSL (apt), Arch Linux/pacman, or macOS/Homebrew with sudo/admin access. The script only auto-installs dependencies for these package managers; other environments can still run manually.
-- ~2.5 GB of free disk space and up to 15 minutes for the first full build.
+The FE6 serial-link payload is a Git submodule with a locally pinned source revision. That revision is stored in the repository's source-only bundle and may not be available from the submodule's upstream remote. On a fresh checkout, run the restore helper from the repository root:
 
-## One-command setup
-
-From the repo root, run:
-
-```bash
-./scripts/quickstart.sh [--rom /path/to/baserom.gba] [--refresh-agbcc]
+```sh
+python3 tools/mgfembp-source/restore.py
 ```
 
-What the script now does:
+The helper initializes or clones the configured submodule, fetches the pinned commit from the local bundle if needed, and checks it out. It stops if the submodule contains uncommitted changes. A plain `git submodule update --init` does not fetch the local bundle commit.
 
-1. Copies `baserom.gba` from the `--rom` path (or `FIREEMBLEM8U_ROM`) if you provided one. A missing ROM is fine — it is optional and not required to build.
-2. Detects your package manager (`apt`, `pacman`, or `brew`) and installs the prerequisites only when they’re not already available:
-   - Toolchain (`arm-none-eabi-binutils`/`arm-none-eabi-gcc`)
-   - `pkg-config` / `pkgconf`
-   - `libpng`
-   - `python3`, `pip3`, `numpy`, `pillow`
-3. Checks whether `tools/agbcc/bin/agbcc` already exists. If it does, the script reuses it; otherwise it clones and builds [`pret/agbcc`](https://github.com/pret/agbcc) inside `.deps/agbcc` (ignored by git), installs it into `tools/agbcc`, and you can force a refresh any time with `--refresh-agbcc`.
-4. Fetches submodules (`git submodule update --init --recursive`). The FE6 SIO link payload is built from source via the [mgfembp](https://github.com/StanHash/mgfembp) submodule rather than a committed blob.
-5. Builds helper tools via `./build_tools.sh`.
-6. Runs `make -j$(nproc)` to produce `fireemblem8.gba`. The first build also fetches/builds mgfembp's own agbcc variant (`010110-ThumbPatch`) for the payload sub-build.
-7. Verifies the ROM hash with `sha1sum -c checksum.sha1`.
+Run this helper before `scripts/quickstart.sh`: that script performs a regular submodule update before it reaches the build. The Makefile also calls the helper automatically when `mgfembp/Makefile` is missing.
 
-On success you’ll see:
+## Build
 
-```
-fireemblem8.gba: OK
-[✓] Build complete: /path/to/fireemblem8u/fireemblem8.gba
+The convenience script can install common system packages on apt, pacman, or Homebrew systems, install Python image libraries, and clone/build agbcc if it is missing:
+
+```sh
+./scripts/quickstart.sh
 ```
 
-## Troubleshooting
+The original ROM is optional. To copy one into the checkout for `asmdiff.sh`, pass `--rom /path/to/baserom.gba` or set `FIREEMBLEM8U_ROM`. The `--refresh-agbcc` option forces the helper to fetch and rebuild agbcc from the current `pret/agbcc` `origin/master`; it is not a pinned source revision. By default an existing `tools/agbcc` install is reused.
 
-- **No ROM** – `baserom.gba` is optional; the build works and self-verifies without it. Provide `--rom /path/to/rom.gba` (or `FIREEMBLEM8U_ROM=/path/to/rom.gba`) only if you want to use `asmdiff.sh`.
-- **No sudo/root** – apt/pacman installs require elevated privileges. If you run the script without sudo, it will skip the package install step and remind you to install the prerequisites manually before re-running. Homebrew installs keep working without sudo.
-- **Unsupported distro** – Install the prerequisites manually (arm-none-eabi toolchain, pkg-config, libpng, python3, pip, numpy, pillow) then rerun the script; it’ll skip package installs once the tools are on your PATH.
-- **Already-installed toolchain** – The script detects `arm-none-eabi-*` binaries and skips reinstalling them. Existing `tools/agbcc` installs are reused too; run `./scripts/quickstart.sh --refresh-agbcc` if you need a fresh copy.
-- **Slower rebuilds** – Subsequent `make` runs are faster. For incremental work, run `make -j$(nproc)` manually.
+If dependencies are already installed, the equivalent manual build is:
 
-After the script finishes, launch your preferred emulator with `fireemblem8.gba` or start modifying the source.
+```sh
+./build_tools.sh
+make -j4 compare
+```
+
+The output is `fireemblem8.gba`. The `compare` target checks its SHA-1 against `checksum.sha1`; on macOS it uses `shasum`, and on other systems it uses `sha1sum`.
+
+## Toolchain notes
+
+Most game C files use agbcc. Selected matching routines use an isolated GNU ARM GCC 16.2.0 backend that Make builds under the ignored `.deps/gcc16-matching/` directory. The backend builder downloads GCC source from GNU, verifies its pinned SHA-256, applies the repository's checked backend changes, then builds the compiler and matching plugins. The first full build therefore includes this compiler bootstrap and can need substantially more time and disk space than an incremental build. No fixed time or disk estimate is published here.
+
+The current backend bootstrap targets Apple Silicon macOS. It expects `clang`, `clang++`, `make`, and `tar`, along with Homebrew GMP, MPFR, MPC, ISL, and ARM binutils under `/opt/homebrew`. The convenience script's package-manager setup does not install all of these backend prerequisites. Other systems may need adjustments to `tools/arm-dispatch/build_backend.py` and their compiler dependencies before the matching build works.
+
+The FE6 payload has its own pinned agbcc variant. Its compiler installer and payload sources come from the restored submodule revision; the first payload build may bootstrap that compiler too.
+
+The convenience script calls `nproc` and `sha1sum` directly. If those command names are unavailable on your system, install compatible command-line tools or use the manual `make -j4 compare` path after dependencies are ready.
+
+## Common setup issues
+
+- **Missing `png.h`:** install the libpng development package, then rerun `./build_tools.sh`.
+- **Payload submodule cannot be checked out:** run `python3 tools/mgfembp-source/restore.py` from the repository root. Check that `mgfembp/` has no local modifications if the helper refuses to proceed.
+- **Missing ARM tools:** install an ARM GNU toolchain that provides `arm-none-eabi-as`, `ld`, `objcopy`, `cpp`, and `gcc`.
+- **Pinned GCC bootstrap fails:** check the host compiler and library paths described above. The backend build log is under `.deps/gcc16-matching/`.
